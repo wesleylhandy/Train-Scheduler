@@ -57,7 +57,7 @@ database.ref().on("child_added", function (childSnapshot)  {
 	  //get current date/time
 	var d = moment(new Date());
 	var year = d.year();
-
+	$("#year").text(year);
 	var time = d.format("HH:mm");
 
 
@@ -109,7 +109,7 @@ database.ref().on("child_added", function (childSnapshot)  {
 
 		
 
-		if (elapsedTime > 0) {
+		if (startTime < currentTime) {
 			//divide time by the freq, keep as many 
 			var timeRemaining = frequency - Math.round(((elapsedTime/parseInt(frequency)) % 1).toFixed(10) * frequency);
 

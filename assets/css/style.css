@@ -1,0 +1,75 @@
+html {
+	min-height: 100%;
+	position: relative;
+}
+
+body {
+	height: 100%;
+	background-image: url("https://static.pexels.com/photos/825/rails-train-path-way.jpg");
+	background-size: cover;
+	background-position: center;
+	margin-bottom: 6.5em;
+}
+
+.jumbotron {
+	background-image: url("https://static.pexels.com/photos/60267/pexels-photo-60267.jpeg");
+	background-size: cover;
+	background-position: center;
+	color: white;
+	border: 5px solid white;
+	margin-top: 1em;
+}
+
+.panel .panel-heading {
+	background-color: #45281d;
+}
+
+.panel {
+	border: 1px solid #45281d;
+}
+
+.btn, .btn .btn-primary {
+	background-color: #45281d;
+	color: white;
+	border: 1px solid #45281d;
+}
+
+.btn:hover, .btn .btn-primary:hover {
+	background-color: #351813;
+	color: white;
+	border: 1px solid #45281d;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	margin-top: 0.5em;
+	padding-top: 0.5em;
+	width: 100%;
+	/* Set the fixed height of the footer here */
+	height: 6em;
+	color: white;
+	background-color: #45281d;
+	border-top-style: solid;
+	border-top-color: white;
+	border-top-width: .325em;
+}
+
+.footer a:link {
+    text-decoration: none;
+    color: white;
+    font-size: 2em;
+}
+
+.footer a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+.footer a:hover {
+	border-radius: 5px;
+    background-color: white;
+    color: #45281d;
+    padding-left: 0.125em;
+    padding-right: 0.125em;
+}
