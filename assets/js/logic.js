@@ -85,14 +85,14 @@ database.ref().on("child_added", function (childSnapshot)  {
 		var currentHour = parseInt(currentTime[0]);
 		var currentMinute = parseInt(currentTime[1]);
 
-		if (currentHour >= startHour && currentMinute >= startMinute) {
+		if (currentHour >= startHour && currentMinute > startMinute) {
 			var elapsedHours = currentHour - startHour;
 			var elapsedMinutes = currentMinute - startMinute;
 			var elapsedTime = elapsedHours * 60 + elapsedMinutes;
 			console.log("This means as of " + time + ", this train has run for " + elapsedTime + " minutes.");
-		} else  if (currentHour>= startHour && currentMinute < startMinute) {
+		} else  if (currentHour>= startHour && currentMinute <= startMinute) {
 			var elapsedHours = currentHour - startHour;
-			var elapsedMinutes = currentMinute - startMinute + 60;
+			var elapsedMinutes = startMinute - currentMinute;
 			var elapsedTime = elapsedHours * 60 + elapsedMinutes;
 			console.log("This means as of " + time + ", this train has run for " + elapsedTime + " minutes.");
 		} else if (currentMinute <= startMinute) {
