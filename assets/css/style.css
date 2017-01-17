@@ -11,7 +11,22 @@ body {
 	margin-bottom: 6.5em;
 }
 
+.profile{
+    border: 3px solid #B7B7B7;
+    padding: 10px;
+    margin-top: 10px;
+    width: 350px;
+    background-color: #F7F7F7;
+    height: 160px;
+}
+.profile p{margin: 0px 0px 10px 0px;}
+.head{margin-bottom: 10px;}
+.head a{float: right;}
+.profile img{width: 100px;float: left;margin: 0px 10px 10px 0px;}
+.proDetails{float: left;}
+
 .jumbotron {
+	clear: both;
 	background-image: url("https://static.pexels.com/photos/60267/pexels-photo-60267.jpeg");
 	background-size: cover;
 	background-position: center;

@@ -7,12 +7,54 @@
     messagingSenderId: "429679382774"
   };
 
-  firebase.initializeApp(config);
+  var defaultApp = firebase.initializeApp(config);
+
+  console.log(defaultApp.name)
 
   //assign database
 
   var database = firebase.database();
 
+ //Google Log-in functions
+
+ function onSuccess(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    gapi.client.load('plus', 'v1', function () {
+        var request = gapi.client.plus.people.get({
+            'userId': 'me'
+        });
+        //Display the user details
+        request.execute(function (resp) {
+            var profileHTML = '<div class="profile"><div class="head">Welcome '+resp.name.givenName+'! <a href="javascript:void(0);" onclick="signOut();">Sign out</a></div>';
+            profileHTML += '<img src="'+resp.image.url+'"/><div class="proDetails"><p>'+resp.displayName+'</p><p>'+resp.emails[0].value+'</p><p>'+resp.gender+'</p><p>'+resp.id+'</p><p><a href="'+resp.url+'">View Google+ Profile</a></p></div></div>';
+            $('.userContent').html(profileHTML);
+            $('#gSignIn').slideUp('slow');
+        });
+    });
+}
+function onFailure(error) {
+    alert(error);
+}
+
+function renderButton() {
+    gapi.signin2.render('gSignIn', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+    });
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        $('.userContent').html('');
+        $('#gSignIn').slideDown('slow');
+    });
+}
 
 
   //create some variables 
@@ -52,6 +94,7 @@ $("#add-train-btn").on("click", function(event){
 
 database.ref().on("child_added", function (childSnapshot)  {
 
+	
 	console.log("______NEW TRAIN INFO_______");
 
 	  //get current date/time
@@ -85,36 +128,32 @@ database.ref().on("child_added", function (childSnapshot)  {
 		var currentHour = parseInt(currentTime[0]);
 		var currentMinute = parseInt(currentTime[1]);
 
-		if (currentHour >= startHour && currentMinute > startMinute) {
-			var elapsedHours = currentHour - startHour;
-			var elapsedMinutes = currentMinute - startMinute;
-			var elapsedTime = elapsedHours * 60 + elapsedMinutes;
+		var elapsedHours, elapsedMinutes, elapsedTime, 
+			hoursTillStart, minutesTillStart, timeTillStart,
+			timeRemaining;
+
+		if(startTime < currentTime) {
+			elapsedHours = currentHour - startHour;
+			if (currentMinute >= startMinute) {
+				elapsedMinutes = currentMinute - startMinute;
+				elapsedTime = elapsedHours * 60 + elapsedMinutes
+			} else {
+				elapsedMinutes = startMinute - currentMinute; //positive number
+				elapsedTime = elapsedHours * 60 - elapsedMinutes;
+			}
 			console.log("This means as of " + time + ", this train has run for " + elapsedTime + " minutes.");
-		} else  if (currentHour>= startHour && currentMinute <= startMinute) {
-			var elapsedHours = currentHour - startHour;
-			var elapsedMinutes = startMinute - currentMinute;
-			var elapsedTime = elapsedHours * 60 + elapsedMinutes;
-			console.log("This means as of " + time + ", this train has run for " + elapsedTime + " minutes.");
-		} else if (currentMinute <= startMinute) {
-			var elapsedHours = startHour - currentHour;
-			var elapsedMinutes = currentMinute - startMinute;
-			var elapsedTime = elapsedHours * 60 + elapsedMinutes;
-			console.log("This means as of " + time + ", this train will first run in " + elapsedTime + " minutes.");
+			timeRemaining = frequency - Math.round(((elapsedTime/parseInt(frequency)) % 1).toFixed(10) * frequency);
 		} else {
-			var elapsedHours = startHour - currentHour;
-			var elapsedMinutes = startMinute - currentMinute;
-			var elapsedTime = elapsedHours * 60 + elapsedMinutes;
-			console.log("This means as of " + time + ", this train will first run in " + elapsedTime + " minutes.");
-		}
-
-		
-
-		if (startTime < currentTime) {
-			//divide time by the freq, keep as many 
-			var timeRemaining = frequency - Math.round(((elapsedTime/parseInt(frequency)) % 1).toFixed(10) * frequency);
-
-		} else {
-			var timeRemaining = elapsedTime; 
+			var hoursTillStart = startHour - currentHour;
+			if (startMinute >= currentMinute) {
+				minutesTillStart = startMinute - currentMinute;
+				timeTillStart = hoursTillStart * 60 + minutesTillStart;
+			} else {
+				minutesTillStart = currentMinute - startMinute;
+				timeTillStart = hoursTillStart * 60 - minutesTillStart;
+			}
+			console.log("This means as of " + time + ", this train will first run in " + timeTillStart + " minutes.");
+			timeRemaining = timeTillStart; 
 		}
 
 		console.log("Leaving only " + timeRemaining + " minutes until the train arrives.");
@@ -123,7 +162,7 @@ database.ref().on("child_added", function (childSnapshot)  {
 		var minute = 0;
 
 		function convertTime (time) {
-			if (time > 60) {
+			if (time >= 60) {
 				hour++;
 				convertTime(time-60);
 			} else {
@@ -137,9 +176,17 @@ database.ref().on("child_added", function (childSnapshot)  {
 		var nextMinute = currentMinute + minute;
 		var nextHour = currentHour + hour;
 		var nextAMPM = " AM";
-		if (nextMinute > 60) {
+		if (nextMinute >= 60) {
 			nextMinute-=60;
 			nextHour+=1;
+		}
+
+		if (nextHour >= 24) {
+			nextHour-=24;
+			nextAMPM = " AM";
+			if (nextHour === 0) {
+				nextHour = "0" + nextHour;
+			}
 		}
 
 		if (nextMinute < 10) {
@@ -150,6 +197,8 @@ database.ref().on("child_added", function (childSnapshot)  {
 			nextHour-=12;
 			nextAMPM = " PM";
 		}
+
+
 
 		var nextArrival = nextHour + ":" + nextMinute + nextAMPM;
 
