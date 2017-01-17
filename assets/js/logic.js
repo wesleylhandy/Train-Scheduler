@@ -1,5 +1,100 @@
+//google sign-in
+
+/**
+    * Function called when clicking the Login/Logout button.
+*/
+// [START buttoncallback]
+function toggleSignIn() {
+  if (!firebase.auth().currentUser) {
+    // [START createprovider]
+    var provider = new firebase.auth.GoogleAuthProvider();
+    // [END createprovider]
+    // [START addscopes]
+    provider.addScope('https://www.googleapis.com/auth/plus.login');
+    // [END addscopes]
+    // [START signin]
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // [START_EXCLUDE]
+      document.getElementById('quickstart-oauthtoken').textContent = token;
+      // [END_EXCLUDE]
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // [START_EXCLUDE]
+      if (errorCode === 'auth/account-exists-with-different-credential') {
+        alert('You have already signed up with a different auth provider for that email.');
+        // If you are using multiple auth providers on your app you should handle linking
+        // the user's accounts here.
+      } else {
+        console.error(error);
+      }
+      // [END_EXCLUDE]
+    });
+    // [END signin]
+  } else {
+    // [START signout]
+    firebase.auth().signOut();
+    // [END signout]
+  }
+  // [START_EXCLUDE]
+  document.getElementById('quickstart-sign-in').disabled = true;
+  // [END_EXCLUDE]
+}
+// [END buttoncallback]
+/**
+ * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+ *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+ *    out, and that is where we update the UI.
+ */
+function initApp() {
+  // Listening for auth state changes.
+  // [START authstatelistener]
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var displayName = user.displayName;
+      var email = user.email;
+      var emailVerified = user.emailVerified;
+      var photoURL = user.photoURL;
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid;
+      var providerData = user.providerData;
+      // [START_EXCLUDE]
+      document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+      document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+      // [END_EXCLUDE]
+    } else {
+      // User is signed out.
+      // [START_EXCLUDE]
+      document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+      document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
+      document.getElementById('quickstart-account-details').textContent = 'null';
+      document.getElementById('quickstart-oauthtoken').textContent = 'null';
+      // [END_EXCLUDE]
+    }
+    // [START_EXCLUDE]
+    document.getElementById('quickstart-sign-in').disabled = false;
+    // [END_EXCLUDE]
+  });
+  // [END authstatelistener]
+  document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+}
+window.onload = function() {
+  initApp();
+};
+
 // Initialize Firebase
-  var config = {
+  const config = {
     apiKey: "AIzaSyAQeqcMBRN2X3Sk9SYPVdQ2AsEtRvzvci8",
     authDomain: "train-scheduler-edf91.firebaseapp.com",
     databaseURL: "https://train-scheduler-edf91.firebaseio.com",
@@ -7,56 +102,14 @@
     messagingSenderId: "429679382774"
   };
 
-  var defaultApp = firebase.initializeApp(config);
+  const defaultApp = firebase.initializeApp(config);
 
   console.log(defaultApp.name)
 
   //assign database
 
-  var database = firebase.database();
-
- //Google Log-in functions
-
- function onSuccess(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    gapi.client.load('plus', 'v1', function () {
-        var request = gapi.client.plus.people.get({
-            'userId': 'me'
-        });
-        //Display the user details
-        request.execute(function (resp) {
-            var profileHTML = '<div class="profile"><div class="head">Welcome '+resp.name.givenName+'! <a href="javascript:void(0);" onclick="signOut();">Sign out</a></div>';
-            profileHTML += '<img src="'+resp.image.url+'"/><div class="proDetails"><p>'+resp.displayName+'</p><p>'+resp.emails[0].value+'</p><p>'+resp.gender+'</p><p>'+resp.id+'</p><p><a href="'+resp.url+'">View Google+ Profile</a></p></div></div>';
-            $('.userContent').html(profileHTML);
-            $('#gSignIn').slideUp('slow');
-        });
-    });
-}
-function onFailure(error) {
-    alert(error);
-}
-
-function renderButton() {
-    gapi.signin2.render('gSignIn', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-    });
-}
-
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        $('.userContent').html('');
-        $('#gSignIn').slideDown('slow');
-    });
-}
-
-
+  const database = firebase.database();
+ 
   //create some variables 
 var trainName;
 var destination;

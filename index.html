@@ -17,8 +17,12 @@
 
     <!-- Firebase Reference -->
     <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
-    <!-- Google Log-in -->
-    <script src="https://apis.google.com/js/client:platform.js?onload=renderButton" async defer></script>
+    
+    <meta name="google-signin-client_id" content="429679382774-8h4n1a9f35o65c2nsjuqvdkrm1gcn11l.apps.googleusercontent.com">
+    <meta name="google-signin-cookiepolicy" content="single_host_origin">
+    <meta name="google-signin-scope" content="profile email">
+      <!-- Google Sign In -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Moment.js Reference -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
@@ -28,15 +32,40 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
 
-  </head>
+</head>
 
   <body>
 
-  <!-- HTML for render Google Sign-In button -->
-  <div id="gSignIn"></div>
-  <!-- HTML for displaying user details -->
-  <div class="userContent"></div>
+    <div id="sign-in-div">
+      <!-- <p>Sign in with your Google account below.</p> -->
 
+      <!-- Button that handles sign-in/sign-out -->
+      <button class="btn btn-primary" id="quickstart-sign-in">Sign in with Google</button>
+
+      <div class="quickstart-user-details-container">
+        Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+        <div>Firebase auth <code>currentUser</code> object value:</div>
+        <pre><code id="quickstart-account-details">null</code></pre>
+        <div>Google OAuth Access Token:</div>
+        <pre><code id="quickstart-oauthtoken">null</code></pre>
+      </div>
+    </div>
+
+<!--     <div id="sign-out-div">
+      <p>Sign in with your Google account below.</p>
+      [START google_button]
+      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+      [END google_button]
+      <br>
+      <button disabled class="btn btn-primary" id="signout" name="signout">Sign Out</button>
+
+      <div class="quickstart-user-details-container">
+        Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+        <div>Firebase auth <code>currentUser</code> object value:</div>
+        <pre><code id="quickstart-account-details">null</code></pre>
+      </div>
+    </div>
+ -->
     <!-- Train Tracker -->
     <div class="container">
 
