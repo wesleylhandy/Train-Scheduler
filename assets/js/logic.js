@@ -83,8 +83,8 @@ function initApp() {
       var providerData = user.providerData;
 
       function writeUserData(userId, name, email, imageUrl) {
-		  firebase.database().ref('users/' + uid).set({
-		    username: userId,
+		  firebase.database().ref('users/' + userId).set({
+		    username: name,
 		    email: email,
 		    profile_picture: imageUrl,
 		    lastLogin: firebase.database.ServerValue.TIMESTAMP
