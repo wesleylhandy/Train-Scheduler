@@ -11,13 +11,20 @@ body {
 	margin-bottom: 6.5em;
 }
 
+#sign-in-div {
+	background-color: white;
+	border-radius: 5px;
+	padding: .25em;
+	margin: .25em;
+}
+
 .quickstart-user-details-container {
-	display: none;
 	height: 2.5em;
 	color: #45281d;
 	background-color: white;
 	padding: 0.125em;
 	border-radius: 5px;
+	display: none;
 }
 
 .jumbotron {

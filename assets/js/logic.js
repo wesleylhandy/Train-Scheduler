@@ -95,7 +95,7 @@ function initApp() {
       // [START_EXCLUDE]
 
       document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-      $("<img>").attr("src", photoURL).appendTo("#profile-pic").addClass("img-rounded");
+      $("<img>").attr("src", photoURL).appendTo("#profile-pic").addClass("img-responsive img-circle");
       $("#user-name").text(displayName);
       $(".quickstart-user-details-container").show();
       
