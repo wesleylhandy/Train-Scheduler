@@ -13,6 +13,11 @@ body {
 
 .quickstart-user-details-container {
 	display: none;
+	height: 2.5em;
+	color: #45281d;
+	background-color: white;
+	padding: 0.125em;
+	border-radius: 5px;
 }
 
 .jumbotron {
