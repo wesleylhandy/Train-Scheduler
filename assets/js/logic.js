@@ -1,3 +1,20 @@
+// Initialize Firebase
+  const config = {
+    apiKey: "AIzaSyAQeqcMBRN2X3Sk9SYPVdQ2AsEtRvzvci8",
+    authDomain: "train-scheduler-edf91.firebaseapp.com",
+    databaseURL: "https://train-scheduler-edf91.firebaseio.com",
+    storageBucket: "train-scheduler-edf91.appspot.com",
+    messagingSenderId: "429679382774"
+  };
+
+  const defaultApp = firebase.initializeApp(config);
+
+  console.log(defaultApp.name)
+
+  //assign database
+
+  const database = firebase.database();
+
 //google sign-in
 
 /**
@@ -64,18 +81,29 @@ function initApp() {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
+
+      function writeUserData(userId, name, email, imageUrl) {
+		  firebase.database().ref('users/' + uid).set({
+		    username: userId,
+		    email: email,
+		    profile_picture: imageUrl,
+		    lastLogin: firebase.database.ServerValue.TIMESTAMP
+		  });
+		}
+
+		writeUserData(uid, displayName, email, photoURL);
       // [START_EXCLUDE]
 
       document.getElementById('quickstart-sign-in').textContent = 'Sign out';
       $("<img>").attr("src", photoURL).appendTo("#profile-pic").addClass("img-rounded");
       $("#user-name").text(displayName);
-      $("#quickstart-user-details-container").show();
+      $(".quickstart-user-details-container").show();
       
       // [END_EXCLUDE]
     } else {
       // User is signed out.
       // [START_EXCLUDE]
-    	$("#quickstart-user-details-container").hide();
+    	$(".quickstart-user-details-container").hide();
     	$("#user-name").empty();
     	$("#profile-pic").empty();
       document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
@@ -87,26 +115,11 @@ function initApp() {
   // [END authstatelistener]
   document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
 }
-window.onload = function() {
+$(document).ready(function() {
   initApp();
-};
+});
 
-// Initialize Firebase
-  const config = {
-    apiKey: "AIzaSyAQeqcMBRN2X3Sk9SYPVdQ2AsEtRvzvci8",
-    authDomain: "train-scheduler-edf91.firebaseapp.com",
-    databaseURL: "https://train-scheduler-edf91.firebaseio.com",
-    storageBucket: "train-scheduler-edf91.appspot.com",
-    messagingSenderId: "429679382774"
-  };
 
-  const defaultApp = firebase.initializeApp(config);
-
-  console.log(defaultApp.name)
-
-  //assign database
-
-  const database = firebase.database();
  
   //create some variables 
 var trainName;
