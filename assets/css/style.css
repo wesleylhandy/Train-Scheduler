@@ -20,11 +20,21 @@ body {
 
 .quickstart-user-details-container {
 	height: 2.5em;
+	width: 150px;
 	color: #45281d;
 	background-color: white;
 	padding: 0.125em;
 	border-radius: 5px;
 	display: none;
+}
+
+#profile-pic {
+	height: 2.5em;
+	float: left;
+}
+
+#user-name {
+	float: left;
 }
 
 .jumbotron {
