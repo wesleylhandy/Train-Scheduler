@@ -16,12 +16,12 @@ body {
 	border-radius: 5px;
 	padding: .25em;
 	margin: .25em;
-	width: 150px;
+	
 }
 
 .quickstart-user-details-container {
 	height: 2.5em;
-
+	width: 160px;
 	color: #45281d;
 	background-color: white;
 	padding: 0.125em;
@@ -36,6 +36,7 @@ body {
 
 #user-name {
 	float: left;
+	vertical-align: center;
 }
 
 .jumbotron {
@@ -54,6 +55,10 @@ body {
 
 .panel {
 	border: 1px solid #45281d;
+}
+
+button {
+	clear: both;
 }
 
 .btn,.btn:active, .btn:visited,
