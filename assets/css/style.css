@@ -16,11 +16,12 @@ body {
 	border-radius: 5px;
 	padding: .25em;
 	margin: .25em;
+	width: 150px;
 }
 
 .quickstart-user-details-container {
 	height: 2.5em;
-	width: 150px;
+
 	color: #45281d;
 	background-color: white;
 	padding: 0.125em;
@@ -29,7 +30,7 @@ body {
 }
 
 #profile-pic {
-	height: 2.5em;
+	width: 3em;
 	float: left;
 }
 
