@@ -18,9 +18,7 @@ function toggleSignIn() {
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      // [START_EXCLUDE]
-      document.getElementById('quickstart-oauthtoken').textContent = token;
-      // [END_EXCLUDE]
+
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -45,9 +43,7 @@ function toggleSignIn() {
     firebase.auth().signOut();
     // [END signout]
   }
-  // [START_EXCLUDE]
-  document.getElementById('quickstart-sign-in').disabled = true;
-  // [END_EXCLUDE]
+
 }
 // [END buttoncallback]
 /**
@@ -69,22 +65,21 @@ function initApp() {
       var uid = user.uid;
       var providerData = user.providerData;
       // [START_EXCLUDE]
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+
       document.getElementById('quickstart-sign-in').textContent = 'Sign out';
-      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+      $("<img>").attr("src", photoURL).appendTo("#profile-pic").addClass("img-rounded");
+      $("#user-name").text(displayName);
+      
       // [END_EXCLUDE]
     } else {
       // User is signed out.
       // [START_EXCLUDE]
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+    
       document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
-      document.getElementById('quickstart-account-details').textContent = 'null';
-      document.getElementById('quickstart-oauthtoken').textContent = 'null';
+
       // [END_EXCLUDE]
     }
-    // [START_EXCLUDE]
-    document.getElementById('quickstart-sign-in').disabled = false;
-    // [END_EXCLUDE]
+ 
   });
   // [END authstatelistener]
   document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
