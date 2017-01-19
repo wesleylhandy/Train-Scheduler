@@ -97,12 +97,14 @@ function initApp() {
       document.getElementById('quickstart-sign-in').textContent = 'Sign out';
       $("<img>").attr("src", photoURL).appendTo("#profile-pic").addClass("img-responsive img-circle");
       $("#user-name").text(displayName);
+      $("#sign-in-div").attr("background-color", "white");
 
       
       // [END_EXCLUDE]
     } else {
       // User is signed out.
       // [START_EXCLUDE]
+      	$("#sign-in-div").attr("background-color", rgba(255, 255, 255, 0.0));
     	$("#user-name").empty();
     	$("#profile-pic").empty();
       document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
