@@ -12,7 +12,9 @@ body {
 }
 
 #sign-in-div {
-	background-color: white;
+	position: absolute;
+	top: 0.25em;
+	right: 0.25em;
 	border-radius: 5px;
 	padding: .25em;
 	margin: .25em;
@@ -21,22 +23,29 @@ body {
 
 .quickstart-user-details-container {
 	height: 2.5em;
-	width: 160px;
+	width: 360px;
 	color: #45281d;
-	background-color: white;
 	padding: 0.125em;
 	border-radius: 5px;
-	display: none;
+	
 }
 
 #profile-pic {
 	width: 3em;
 	float: left;
+	vertical-align: middle;
 }
 
 #user-name {
 	float: left;
-	vertical-align: center;
+	font-size: 1.25em;
+	padding: 0.5em;
+
+}
+
+#quickstart-sign-in {
+	float: right;
+	margin: 0.25em;
 }
 
 .jumbotron {
@@ -46,7 +55,7 @@ body {
 	background-position: center;
 	color: white;
 	border: 5px solid white;
-	margin-top: 1em;
+	margin-top: 5em;
 }
 
 .panel .panel-heading {
@@ -57,19 +66,16 @@ body {
 	border: 1px solid #45281d;
 }
 
-button {
-	clear: both;
-}
-
-.btn,.btn:active, .btn:visited,
+.btn, .btn:active, .btn:visited,
 .btn .btn-primary, .btn .btn-primary:active,
-.btn .btn-primary:visited {
+.btn .btn-primary:visited, .btn-primary,
+.btn-primary:active, .btn-primary:visited {
 	background-color: #45281d;
 	color: white;
 	border: 1px solid #45281d;
 }
 
-.btn:hover, .btn .btn-primary:hover,  {
+.btn:hover, .btn .btn-primary:hover, .btn-primary:hover {
 	background-color: #351813;
 	color: white;
 	border: 1px solid #45281d;

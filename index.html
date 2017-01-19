@@ -5,7 +5,7 @@
   <head>
 
     <meta charset="UTF-8">
-    <meta name="google-signin-client_id" content="429679382774-8h4n1a9f35o65c2nsjuqvdkrm1gcn11l.apps.googleusercontent.com">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Train Scheduler</title>
@@ -17,12 +17,13 @@
 
     <!-- Firebase Reference -->
     <script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
-    
+       <!-- Google Sign In -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <meta name="google-signin-client_id" content="429679382774-8h4n1a9f35o65c2nsjuqvdkrm1gcn11l.apps.googleusercontent.com">
     <meta name="google-signin-cookiepolicy" content="single_host_origin">
     <meta name="google-signin-scope" content="profile email">
-      <!-- Google Sign In -->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+   
 
     <!-- Moment.js Reference -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
@@ -39,11 +40,11 @@
     <div id="sign-in-div">
 
       <div class="quickstart-user-details-container">
-        <div id="profile-pic"></div><div id="user-name"></div>
-      </div>
+        <div id="profile-pic" class="hide"></div><div id="user-name" class="hide"></div>
+              <!-- Button that handles sign-in/sign-out -->
+        <div class="btn btn-primary" id="quickstart-sign-in">Sign in with Google</div>
 
-      <!-- Button that handles sign-in/sign-out -->
-      <button class="btn btn-primary" id="quickstart-sign-in">Sign in with Google</button>
+      </div>
     
     </div>
     
