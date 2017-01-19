@@ -104,7 +104,7 @@ function initApp() {
     } else {
       // User is signed out.
       // [START_EXCLUDE]
-      	$("#sign-in-div").css("background-color", rgba(255, 255, 255, 0.0));
+      	$("#sign-in-div").css("background-color", "rgba(255, 255, 255, 0.0)");
     	$("#user-name").empty();
     	$("#profile-pic").empty();
       document.getElementById('quickstart-sign-in').textContent = 'Sign in with Google';
